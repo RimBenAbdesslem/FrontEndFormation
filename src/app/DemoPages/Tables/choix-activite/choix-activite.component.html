@@ -1,0 +1,95 @@
+
+<!--nouveau-->
+
+<div class="card">
+  <form class="form" role="form" class="mb-4" autocomplete="off">
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <div class="table-responsive">
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>
+                  User
+                </th>
+                <ng-container >
+                  <th>
+                    {{competence.nomActivite}}
+           <tr >
+            <th *ngFor="let domaine of competence.ListeActivite"  class="text-center"  >
+
+              {{domaine.nomDomaine}} 
+
+        <tr class="text-center">
+          <th >
+        <tr>
+          <td > 
+            <span class="text-center">
+              {{domaine.nomLabel}} </span> </td>
+        </tr>
+        </th>
+        </tr>
+        </th>
+           </tr>
+
+                  </th>
+     
+              </ng-container>
+              </tr>
+            </thead>
+            <!-- end head -->
+
+            <!-- body -->
+            <tbody>
+              <ng-container  >
+              <tr *ngFor="let user of competence.AllActiviteusersTrue">
+                <th scope="row"  > {{user.userName}} {{user.fullName}}
+                </th>
+                <ng-container  >
+                  <th>
+                   
+           <tr >
+            <th *ngFor="let domaine of competence.ListeActivite"  class="text-center"  >
+
+             
+
+        <tr class="text-center">
+          <th >
+        <tr *ngIf="user"  >
+          <td > 
+            <div *ngIf="getchoixUserLabelSumActivite(user,domaine)>0;else xBloc;" class="form-control" style="width: 60px;" style="width: 60px;" >
+              <select  [ngModel]="getchoixUserLabelSumActivite(user,domaine)" (ngModelChange)="changeSelectActivite(user,domaine,$event)" [ngModelOptions]="{standalone: true}" style="border: 0px;" >
+              
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+
+            </div>
+            <ng-template #xBloc>
+              <div class="form-control" style="width: 60px;">
+                x
+              </div>
+            </ng-template> 
+          </td>
+        </tr>
+        </th>
+        </tr>
+        </th>
+           </tr>
+
+                  </th>
+     
+              </ng-container>
+              </tr>
+            </ng-container >
+            </tbody>
+            <!-- End body -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

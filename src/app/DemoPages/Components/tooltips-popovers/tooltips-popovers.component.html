@@ -1,0 +1,207 @@
+
+<!--nouveau-->
+<div class="card">
+<div class="app-header__content" [class]="' header-shadow ' ">
+  <div class="app-header-left">
+    <div class="search-wrapper" [class.active]="isActive">
+      <div class="input-holder">
+        <input type="text" placeholder="Tapez pour rechercher" class="search-input"[ngModelOptions]="{standalone: true}"
+        id="filter-string" [(ngModel)]="userFilter.userName" [value]="userFilter.userName">
+        <button class="search-icon" (click)="isActive = true"><span></span></button>
+      </div>
+      <button class="close" (click)="isActive = false"></button>
+    </div>
+  </div>
+  <div class="app-header-right">
+    <div class="search-wrapper" [class.active]="isActive1">
+      <div class="input-holder">
+        <input type="text" placeholder="Tapez pour rechercher" class="search-input"[ngModelOptions]="{standalone: true}"
+        id="filter-string" [(ngModel)]="ActiviteFilter.nomActivite" [value]="ActiviteFilter.nomActivite">
+        <button class="search-icon" (click)="isActive1 = true"><span></span></button>
+      </div>
+      <button class="close" (click)="isActive1 = false"></button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="card">
+  <form class="form" role="form" class="mb-4" autocomplete="off">
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <div class="table-responsive">
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>
+                
+                  <!--user-->
+                </th>
+                
+                <ng-container  *ngFor="let activite of competence.ActiviteList | filterBy: ActiviteFilter" >
+                  <th>
+                    {{activite.nomActivite}}
+           <tr >
+            <th *ngFor="let domaine of competence.AllListeActivite"  class="text-center"  [hidden]="activite.id!=domaine.activiteId ">
+
+              {{domaine.nomDomaine}} 
+
+        <tr class="text-center">
+          <th >
+        <tr>
+          <td > 
+            <span class="text-center">
+              {{domaine.nomLabel}} </span> </td>
+        </tr>
+        </th>
+        </tr>
+        </th>
+           </tr>
+
+                  </th>
+     
+              </ng-container>
+              </tr>
+            </thead>
+            <!-- end head -->
+
+            <!-- body -->
+            <tbody>
+            
+              <tr *ngFor="let user of competence.AllusersTrue | filterBy: userFilter">
+                <th scope="row"  > {{user.userName}} {{user.fullName}}
+                </th>
+                <ng-container  *ngFor="let activite of competence.ActiviteList" >
+                  <th>
+                   
+           <tr >
+            <th *ngFor="let domaine of competence.AllListeActivite"  class="text-center"  [hidden]="activite.id!=domaine.activiteId ">
+
+             
+
+        <tr class="text-center">
+          <th >
+        <tr *ngIf="user"  >
+          <td > 
+            <div *ngIf="getUserLabelSumActivite(user,domaine,activite)>0;else xBloc;" class="form-control" style="width: 60px;" style="width: 60px;" >
+              <select  [ngModel]="getUserLabelSumActivite(user,domaine,activite)" (ngModelChange)="changeSelectActivite(user,domaine,$event)" [ngModelOptions]="{standalone: true}" style="border: 0px;" >
+              
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+
+            </div>
+            <ng-template #xBloc>
+              <div class="form-control" style="width: 60px;">
+                x
+              </div>
+            </ng-template> 
+          </td>
+        </tr>
+        </th>
+        </tr>
+        </th>
+           </tr>
+
+                  </th>
+     
+              </ng-container>
+              </tr>
+            
+            </tbody>
+            <!-- End body -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<!--////////////////////-->
+<!--<div class="card">
+  <form class="form" role="form" class="mb-4" autocomplete="off">
+    <div class="card-body">
+      <div id="table" class="table-editable">
+        <div class="table-responsive">
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            
+            <thead>
+              <tr>
+                <th>
+                  User
+                </th>
+                <ng-container  *ngFor="let activite of competence.ActiviteList" >
+                  <th>
+                    {{activite.nomActivite}}
+           <tr >
+            <th *ngFor="let domaine of competence.AllListeActivite"  class="text-center"  [hidden]="activite.id!=domaine.activiteId ">
+
+              {{domaine.nomDomaine}} 
+
+        <tr class="text-center">
+          <th >
+        <tr>
+          <td > 
+            <span class="text-center">
+              {{domaine.nomLabel}} </span> </td>
+        </tr>
+        </th>
+        </tr>
+        </th>
+           </tr>
+
+                  </th>
+     
+              </ng-container>
+              </tr>
+            </thead>
+         
+           
+            <tbody>
+              <tr *ngFor="let user of competence.usersTrue ">
+                <th scope="row"> {{user.userName}} {{user.fullName}}
+                </th>
+                <ng-container  *ngFor="let activite of competence.ActiviteList" >
+                
+              <td  class="text-center">
+               <tr  >
+                <th  *ngFor="let domaine of competence.AllListeActivite" >
+                <tr *ngIf="user" class="text-center">         
+                <th *ngIf="domaine.activiteId== activite.activiteId">
+                </th>
+                <ng-container  *ngFor="let label of competence.AllActiviteMetier" >
+                  <ng-container *ngIf="domaine.labelId==label.labelId" >
+               <td *ngIf="domaine.labelId==label.labelId && domaine.domaineId==label.domaineId"  [hidden]="domaine.domaineId!=label.domaineId ">
+                <div  class="form-control" style="width: 60px;" *ngIf="getUserLabelSum(user,label)>0;else xBloc;"class="form-control" style="width: 60px;" >
+                  <select [ngModel]="label.niveau" (ngModelChange)="changeSelect(user,label,$event)" [ngModelOptions]="{standalone: true}" style="border: 0px;" >
+                  
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
+
+                </div>
+                <ng-template #xBloc>
+                  <div class="form-control" style="width: 60px;">
+                    x
+                  </div>
+                </ng-template>
+               </td>
+              </ng-container>
+            </ng-container>
+                </tr>
+                   </tr>
+                </td>
+           
+            </ng-container>
+              </tr>
+            </tbody>
+         
+          </table>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>-->
